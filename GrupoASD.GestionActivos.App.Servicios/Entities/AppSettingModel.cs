@@ -4,7 +4,8 @@ using System.Text;
 
 namespace GrupoASD.GestionActivos.App.Servicios.Entities
 {
-    public class AppSetting
+    public class AppSettingModel
     {
+        public string UrlApiGestionActivos { get; set; }
     }
 }

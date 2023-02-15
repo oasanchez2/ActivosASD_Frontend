@@ -13,20 +13,37 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
 {
     public interface IAsdGestionActivosApi
     {
-        Task<RespuestaApi> ActivosObtener();
+        /// <summary>
+        ///  Realiza la conexión al api, metodo obtener todos los activos.
+        /// </summary>
+        /// <returns></returns>
+        Task<RespuestaApi> ActivosObtenerAsync();
+        /// <summary>
+        /// Realiza la conexión al api y crea un activo nuevo
+        /// </summary>
+        /// <param name="activo"></param>
+        /// <returns></returns>
         Task<RespuestaApi> ActivosInsertar(ActivosModel activo);
+        /// <summary>
+        /// Realiza la conexión al api, metodo actualizar un activo.
+        /// </summary>
+        /// <param name="activosUpdate"></param>
+        /// <returns></returns>
         Task<RespuestaApi> ActivosUpdate(ActivosUpdate activosUpdate);
+        /// <summary>
+        /// Realiza la conexión al api, realiza busqueda personalizada segun parametros enviados.
+        /// </summary>
+        /// <param name="activosBusquedaModel"></param>
+        /// <returns></returns>
         Task<RespuestaApi> ActivosBusqueda(ActivosBusquedaModel activosBusquedaModel);
     }
     public class AsdGestionActivosApi : IAsdGestionActivosApi
     {
         private readonly HttpClient _httpclient;
-        private readonly AppSettingModel _configuration;
 
-        public AsdGestionActivosApi(HttpClient httpClient, IOptions<AppSettingModel> appSettings)
+        public AsdGestionActivosApi(HttpClient httpClient)
         {
             _httpclient = httpClient;
-            _configuration = appSettings.Value;
         }
 
         
@@ -34,7 +51,7 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
         ///   Realiza la conexión al api, metodo obtener todos los activos.
         /// </summary>
         /// <returns></returns>
-        public async Task<RespuestaApi> ActivosObtener()
+        public async Task<RespuestaApi> ActivosObtenerAsync()
         {
             // CONSTRUIMOS LA URL DE LA ACCIÓN
             var urlBuilder_ = new StringBuilder();

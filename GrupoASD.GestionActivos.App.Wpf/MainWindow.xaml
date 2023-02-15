@@ -4,9 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GrupoASD.GestionActivos.App.Wpf"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Gestión Activos" Height="Auto" Width="800"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Name="menuInicio" Click="MenuInicio_Click">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="Home" HorizontalAlignment="Center" Height="30" Width="30"/>
+                        <TextBlock Text="Inicio" HorizontalAlignment="Center" FontSize="10"/>
+                    </StackPanel>
+                </MenuItem.Header>
 
+            </MenuItem>
+            <MenuItem Name="menuEditarActivo" Click="menuEditarActivo_Click" >
+                <MenuItem.Header>
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="Bookmark" HorizontalAlignment="Center" Height="30" Width="30"/>
+                        <TextBlock Text="Editar Activo" HorizontalAlignment="Center" FontSize="10"/>
+                    </StackPanel>
+                </MenuItem.Header>
+
+            </MenuItem>
+        </Menu>
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Source="/Views/InicioView.xaml" ></Frame>
     </Grid>
 </Window>
