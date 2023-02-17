@@ -18,6 +18,12 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
         /// </summary>
         /// <returns></returns>
         Task<RespuestaApi> ActivosObtenerAsync();
+
+        /// <summary>
+        /// Obtiene un activo por us id
+        /// </summary>
+        /// <returns></returns>
+        Task<RespuestaApi> ActivosObtenerPorIdAsync(int id);
         /// <summary>
         /// Realiza la conexión al api y crea un activo nuevo
         /// </summary>
@@ -100,6 +106,59 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
             }
         }
 
+        /// <summary>
+        /// Obtiene un activo por us id
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RespuestaApi> ActivosObtenerPorIdAsync(int id)
+        {
+            // CONSTRUIMOS LA URL DE LA ACCIÓN
+            var urlBuilder_ = new StringBuilder();
+            urlBuilder_.Append(_httpclient.BaseAddress != null ? _httpclient.BaseAddress.AbsoluteUri.TrimEnd('/') : "")
+                       .Append("/api/activos/")
+                       .Append(id);
+            var url = urlBuilder_.ToString();
+            try
+            {
+                using (var request = new HttpRequestMessage())
+                {
+                    ///////////////////////////////////////
+                    // CONSTRUIMOS LA PETICIÓN (REQUEST) //
+                    ///////////////////////////////////////
+
+                    // DEFINIMOS EL MÉTODO HTTP
+                    request.Method = new HttpMethod("GET");
+
+                    // DEFINIMOS LA URI
+                    request.RequestUri = new Uri(url, System.UriKind.RelativeOrAbsolute);
+
+                    /////////////////////////////////////////
+                    // CONSTRUIMOS LA RESPUESTA (RESPONSE) //
+                    /////////////////////////////////////////
+
+                    // Utilizamos ConfigureAwait(false) para evitar el DeadLock.
+                    var respuesta = await _httpclient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+
+                    // OBTENEMOS EL Content DEL RESPONSE como un String
+                    // Utilizamos ConfigureAwait(false) para evitar el DeadLock.
+                    var responseText_ = await respuesta.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    // DESERIALIZAMOS Content DEL RESPONSE                       
+                    var responsejson = JsonConvert.DeserializeObject(responseText_, new JsonSerializerSettings { Formatting = Formatting.None });
+
+                    RespuestaApi responseBody_ = new RespuestaApi
+                    {
+                        HttpStatus = respuesta.StatusCode,
+                        JsonResultado = (responsejson != null) ? responsejson.ToString() : string.Empty
+                    };
+                    return responseBody_;
+                }
+            }
+            finally
+            {
+
+            }
+        }
         /// <summary>
         /// Realiza la conexión al api y crea un activo nuevo
         /// </summary>
