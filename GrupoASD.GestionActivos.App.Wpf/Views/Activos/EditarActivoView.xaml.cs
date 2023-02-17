@@ -84,12 +84,12 @@ namespace GrupoASD.GestionActivos.App.Wpf.Views.Activos
                     throw new Exception("Ingrese almenos 1 valor");
                 }
 
-                ActivosUpdate activosUpdate = new ActivosUpdate
-                {
-                    IdActivo = Convert.ToInt32(txtIdActivoUpdate.Text),
-                    Serial = txtSerial.Text,
-                    FechaBaja = Convert.ToDateTime(txtFechaBaja.Text)
-                };
+                ActivosUpdate activosUpdate = new ActivosUpdate();
+                activosUpdate.IdActivo = Convert.ToInt32(txtIdActivoUpdate.Text);
+                activosUpdate.Serial = txtSerial.Text;
+                if (!string.IsNullOrEmpty(txtFechaBaja.Text))
+                    Convert.ToDateTime(txtFechaBaja.Text);
+               
                 var resultado = await _asdGestionActivosApi.ActivosUpdate(activosUpdate);
 
                 if (resultado.HttpStatus == System.Net.HttpStatusCode.OK)
