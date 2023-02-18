@@ -28,31 +28,81 @@
                 MinHeight="450"
                 ClipToBounds="True" Grid.Column="0" Grid.Row="0">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50" ></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="100"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Label Grid.Column="0" Grid.Row="1" x:Name="lbActivos" Content="Identificador Activo:" Width="Auto" HorizontalAlignment="Left" Margin="135,0,0,52" Grid.RowSpan="2"></Label>
-                 <StackPanel Grid.Column="1" Grid.Row="1">
-                    <TextBox x:Name="txtIdActivo"                             
-                                     Style="{StaticResource MaterialDesignFilledTextBox}"
-                                     VerticalAlignment="Top"
-                                     TextWrapping="Wrap"                             
-                                     MaxLength="50"
-                                     MaxWidth="200"
-                                     materialDesign:TextFieldAssist.HasClearButton="True"
-                                     materialDesign:HintAssist.Hint="Id Activo">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="1" x:Name="lbActivos" Content="Identificador Activo:" Width="Auto" HorizontalAlignment="Left" Margin="135,0,0,52" Grid.RowSpan="2"/>
+                    <StackPanel Grid.Column="1" Grid.Row="1">
+                        <TextBox x:Name="txtIdActivo"                             
+                            Style="{StaticResource MaterialDesignFilledTextBox}"
+                            VerticalAlignment="Top"
+                            TextWrapping="Wrap"                             
+                            MaxLength="50"
+                            MaxWidth="200"
+                            materialDesign:TextFieldAssist.HasClearButton="True"
+                            materialDesign:HintAssist.Hint="Id Activo"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Grid.Row="2" x:Name="btnBuscar" Width="147" Content="Buscar" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0" Click="btnBuscar_ClickAsync" />
+                    <DataGrid Grid.ColumnSpan="3" Grid.Row="3" x:Name="dgDatosActivo" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding IdActivo}"/>
+                            <DataGridTextColumn Header="Nombre"  Binding="{Binding Nombre}"/>
+                            <DataGridTextColumn Header="Descripción"  Binding="{Binding Descripcion}"/>
+                            <DataGridTextColumn Header="IdTipoActivo"  Binding="{Binding IdTipoActivo}"/>
+                            <DataGridTextColumn Header="Serial"  Binding="{Binding Serial}"/>
+                            <DataGridTextColumn Header="Numero Interno"  Binding="{Binding NumeroInternoInventario}"/>
+                            <DataGridTextColumn Header="Peso"  Binding="{Binding Peso}"/>
+                            <DataGridTextColumn Header="Alto"  Binding="{Binding Alto}"/>
+                            <DataGridTextColumn Header="Ancho"  Binding="{Binding Ancho}"/>
+                            <DataGridTextColumn Header="Largo"  Binding="{Binding Largo}"/>
+                            <DataGridTextColumn Header="ValorCompra"  Binding="{Binding ValorCompra}"/>
+                            <DataGridTextColumn Header="FechaCompra"  Binding="{Binding FechaCompra}"/>
+                            <DataGridTextColumn Header="FechaBaja"  Binding="{Binding FechaBaja}"/>
+                            <DataGridTextColumn Header="IdEstadoActual"  Binding="{Binding IdEstadoActual}"/>
+                            <DataGridTextColumn Header="Color"  Binding="{Binding Color}"/>
+                            <DataGridTemplateColumn Header="Accion">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                            </Grid>
+                                            <Button x:Name="btnEditar" CommandParameter="{Binding IdActivo}" Click="BtnEditarActivo_Click" Grid.Column="1" Grid.Row="0" Content="Editar" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel x:Name="pnlEdicion" Grid.Column="1" Grid.Row="4" Visibility="Hidden">
+                        <Grid Grid.Column="1" Grid.Row="4">
+                            <TextBox x:Name="txtIdActivoUpdate" Visibility="Hidden"></TextBox>
+                            <Label Content="Serial Interno:" HorizontalAlignment="Left" Margin="28,44,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtSerial" HorizontalAlignment="Left" Margin="133,43,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            
+                            <Label Content="Fecha De Baja:" HorizontalAlignment="Left" Margin="28,84,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtFechaBaja" HorizontalAlignment="Left" Margin="133,83,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button x:Name="btnActualizar" Content="Actualizar" HorizontalAlignment="Left" Margin="88,132,0,0" VerticalAlignment="Top" Click="btnActualizar_ClickAsync"/>                            
+                        </Grid>
+                    </StackPanel>    
 
-                    </TextBox>
-                </StackPanel>
-                <Button Grid.Column="1" Grid.Row="2" x:Name="btnBuscar" Width="147" Content="Buscar" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0" Click="btnBuscar_ClickAsync" ></Button>       
+                </Grid>
             </Grid>
         </Border>
     </Grid>
