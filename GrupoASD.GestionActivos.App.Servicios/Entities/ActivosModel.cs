@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GrupoASD.GestionActivos.App.Servicios.Entities
 {
-    public class Activos
+    public class ActivosModel
     {
         public int IdActivo { get; set; }        
         public string Nombre { get; set; }                
