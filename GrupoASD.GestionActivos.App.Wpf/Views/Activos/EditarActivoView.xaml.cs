@@ -73,7 +73,7 @@ namespace GrupoASD.GestionActivos.App.Wpf.Views.Activos
                     throw new Exception("Ingrese almenos 1 valor");
                 }
 
-                ActivosUpdate activosUpdate = new ActivosUpdate();
+                ActivoUpdateModel activosUpdate = new ActivoUpdateModel();
                 activosUpdate.IdActivo = Convert.ToInt32(txtIdActivoUpdate.Text);
                 activosUpdate.Serial = txtSerial.Text;
                 if (!string.IsNullOrEmpty(txtFechaBaja.Text))
