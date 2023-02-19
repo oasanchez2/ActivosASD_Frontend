@@ -1,5 +1,4 @@
 ﻿using GrupoASD.GestionActivos.App.Servicios.Entities;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
