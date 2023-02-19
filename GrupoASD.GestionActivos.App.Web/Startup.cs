@@ -1,3 +1,4 @@
+using GrupoASD.GestionActivos.App.Servicios.Facade;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,7 +24,19 @@ namespace GrupoASD.GestionActivos.App.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                 );
+
+            services.AddHttpClient<IAsdGestionActivosApi, AsdGestionActivosApi>(c =>
+            {
+                c.BaseAddress = new Uri(Configuration.GetValue<string>("VariablesConfiguracion:UrlApiGestionActivos"), System.UriKind.RelativeOrAbsolute);
+                c.Timeout = TimeSpan.FromMinutes(2);
+            });
+
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +56,8 @@ namespace GrupoASD.GestionActivos.App.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 
