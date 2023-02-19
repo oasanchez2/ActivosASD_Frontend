@@ -35,13 +35,25 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
         /// </summary>
         /// <param name="activosUpdate"></param>
         /// <returns></returns>
-        Task<RespuestaApi> ActivosUpdate(ActivosUpdate activosUpdate);
+        Task<RespuestaApi> ActivosUpdate(ActivoUpdateModel activosUpdate);
         /// <summary>
         /// Realiza la conexión al api, realiza busqueda personalizada segun parametros enviados.
         /// </summary>
         /// <param name="activosBusquedaModel"></param>
         /// <returns></returns>
         Task<RespuestaApi> ActivosBusqueda(ActivosBusquedaModel activosBusquedaModel);
+
+        /// <summary>
+        ///   Realiza la conexión al api, metodo obtener todos los tipos de activos.
+        /// </summary>
+        /// <returns></returns>
+        Task<RespuestaApi> TiposActivosObtenerAsync();
+
+        /// <summary>
+        ///   Realiza la conexión al api, metodo obtener todos los tipos de activos.
+        /// </summary>
+        /// <returns></returns>
+        Task<RespuestaApi> EstadosActivosObtenerAsync();
     }
     public class AsdGestionActivosApi : IAsdGestionActivosApi
     {
@@ -52,6 +64,7 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
             _httpclient = httpClient;
         }
 
+        #region Activos
         
         /// <summary>
         ///   Realiza la conexión al api, metodo obtener todos los activos.
@@ -224,7 +237,7 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
         /// </summary>
         /// <param name="activosUpdate"></param>
         /// <returns></returns>
-        public async Task<RespuestaApi> ActivosUpdate(ActivosUpdate activosUpdate)
+        public async Task<RespuestaApi> ActivosUpdate(ActivoUpdateModel activosUpdate)
         {
             // CONSTRUIMOS LA URL DE LA ACCIÓN
             var urlBuilder_ = new StringBuilder();
@@ -339,5 +352,116 @@ namespace GrupoASD.GestionActivos.App.Servicios.Facade
 
             }
         }
+        #endregion
+
+        #region Tipos de Activos
+        /// <summary>
+        ///   Realiza la conexión al api, metodo obtener todos los tipos de activos.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RespuestaApi> TiposActivosObtenerAsync()
+        {
+            // CONSTRUIMOS LA URL DE LA ACCIÓN
+            var urlBuilder_ = new StringBuilder();
+            urlBuilder_.Append(_httpclient.BaseAddress != null ? _httpclient.BaseAddress.AbsoluteUri.TrimEnd('/') : "")
+                       .Append("/api/tipoactivo");
+            var url = urlBuilder_.ToString();
+            try
+            {
+                using (var request = new HttpRequestMessage())
+                {
+                    ///////////////////////////////////////
+                    // CONSTRUIMOS LA PETICIÓN (REQUEST) //
+                    ///////////////////////////////////////
+
+                    // DEFINIMOS EL MÉTODO HTTP
+                    request.Method = new HttpMethod("GET");
+
+                    // DEFINIMOS LA URI
+                    request.RequestUri = new Uri(url, System.UriKind.RelativeOrAbsolute);
+
+                    /////////////////////////////////////////
+                    // CONSTRUIMOS LA RESPUESTA (RESPONSE) //
+                    /////////////////////////////////////////
+
+                    // Utilizamos ConfigureAwait(false) para evitar el DeadLock.
+                    var respuesta = await _httpclient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+
+                    // OBTENEMOS EL Content DEL RESPONSE como un String
+                    // Utilizamos ConfigureAwait(false) para evitar el DeadLock.
+                    var responseText_ = await respuesta.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    // DESERIALIZAMOS Content DEL RESPONSE                       
+                    var responsejson = JsonConvert.DeserializeObject(responseText_, new JsonSerializerSettings { Formatting = Formatting.None });
+
+                    RespuestaApi responseBody_ = new RespuestaApi
+                    {
+                        HttpStatus = respuesta.StatusCode,
+                        JsonResultado = (responsejson != null) ? responsejson.ToString() : string.Empty
+                    };
+                    return responseBody_;
+                }
+            }
+            finally
+            {
+
+            }
+        }
+        #endregion
+
+        #region Estados de los Activos
+        /// <summary>
+        ///   Realiza la conexión al api, metodo obtener todos los tipos de activos.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RespuestaApi> EstadosActivosObtenerAsync()
+        {
+            // CONSTRUIMOS LA URL DE LA ACCIÓN
+            var urlBuilder_ = new StringBuilder();
+            urlBuilder_.Append(_httpclient.BaseAddress != null ? _httpclient.BaseAddress.AbsoluteUri.TrimEnd('/') : "")
+                       .Append("/api/estadosactivos");
+            var url = urlBuilder_.ToString();
+            try
+            {
+                using (var request = new HttpRequestMessage())
+                {
+                    ///////////////////////////////////////
+                    // CONSTRUIMOS LA PETICIÓN (REQUEST) //
+                    ///////////////////////////////////////
+
+                    // DEFINIMOS EL MÉTODO HTTP
+                    request.Method = new HttpMethod("GET");
+
+                    // DEFINIMOS LA URI
+                    request.RequestUri = new Uri(url, System.UriKind.RelativeOrAbsolute);
+
+                    /////////////////////////////////////////
+                    // CONSTRUIMOS LA RESPUESTA (RESPONSE) //
+                    /////////////////////////////////////////
+
+                    // Utilizamos ConfigureAwait(false) para evitar el DeadLock.
+                    var respuesta = await _httpclient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+
+                    // OBTENEMOS EL Content DEL RESPONSE como un String
+                    // Utilizamos ConfigureAwait(false) para evitar el DeadLock.
+                    var responseText_ = await respuesta.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    // DESERIALIZAMOS Content DEL RESPONSE                       
+                    var responsejson = JsonConvert.DeserializeObject(responseText_, new JsonSerializerSettings { Formatting = Formatting.None });
+
+                    RespuestaApi responseBody_ = new RespuestaApi
+                    {
+                        HttpStatus = respuesta.StatusCode,
+                        JsonResultado = (responsejson != null) ? responsejson.ToString() : string.Empty
+                    };
+                    return responseBody_;
+                }
+            }
+            finally
+            {
+
+            }
+        }
+        #endregion
     }
 }
