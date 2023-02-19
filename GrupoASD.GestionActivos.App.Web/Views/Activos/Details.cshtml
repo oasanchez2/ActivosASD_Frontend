@@ -1,0 +1,101 @@
+﻿@model GrupoASD.GestionActivos.App.Servicios.Entities.ActivosModel;
+
+@{
+    ViewData["Title"] = "Details";
+}
+<h1>Detalle</h1>
+
+<div>
+    <h4>Activos</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Serial)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Serial)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Numero Interno")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroInternoInventario)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Peso)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Peso)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Alto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Alto)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ancho)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ancho)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Largo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Largo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValorCompra)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValorCompra)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaCompra)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaCompra)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaBaja)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaBaja)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Estado")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdEstadoActualNavigation.NombreEstado)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Tipo Activo")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdTipoActivoNavigation.Nombre)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdActivo">Editar</a> |
+    <a asp-action="Index">Regresar a lista</a>
+</div>
